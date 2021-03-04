@@ -1,0 +1,4 @@
+/* Funciona como o normalize.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
