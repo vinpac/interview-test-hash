@@ -7,6 +7,7 @@ import { DEFAULT_LOCALE } from '@/static-constants'
 import { useRouter } from 'next/dist/client/router'
 import { castLocale, getSyncMessagesForLocale } from '@/lib/intl'
 import Head from 'next/head'
+import MetaTags from '@/components/MetaTags'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const router = useRouter()
