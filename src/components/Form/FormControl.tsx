@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { useField, UseFieldConfig } from 'react-final-form'
+import { useField, UseFieldConfig } from './hooks'
 import Input, { InputProps } from './Input'
 
 interface Props extends InputProps {
@@ -24,8 +24,9 @@ const FormControl: React.FC<Props> = ({
   required,
   ...props
 }) => {
-  const { input } = useField(name, config)
+  const { input, meta } = useField(name, config)
   const inputOnChange = input.onChange
+  const error = meta.touched ? meta.error : undefined
 
   const handleChange = useCallback(
     (event) => {
@@ -46,15 +47,26 @@ const FormControl: React.FC<Props> = ({
   return (
     <div className={cx('', className)}>
       {label && (
-        <label className="block mb-1.5 text-sm text-gray-700">
+        <label
+          htmlFor={input.id}
+          className="block mb-1.5 text-sm text-gray-700"
+        >
           {label}
           {required && ' *'}
         </label>
       )}
       {rendered}
-      <span role="hint" className="text-xs text-gray-500 font-bold">
-        {hint}
-      </span>
+      {(hint || error) && (
+        <span
+          role={error ? 'error' : 'hint'}
+          className={cx(
+            'text-xs font-bold',
+            error ? 'text-red-500' : 'text-gray-500',
+          )}
+        >
+          {error || hint}
+        </span>
+      )}
     </div>
   )
 }

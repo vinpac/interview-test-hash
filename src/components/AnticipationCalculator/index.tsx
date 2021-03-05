@@ -2,17 +2,13 @@ import React from 'react'
 import cx from 'classnames'
 import AnticipationCalculatorForm from './AnticipationCalculatorForm'
 import AnticipationCalculatorResult from './AnticipationCalculatorResult'
-import { Form } from 'react-final-form'
+import { Form } from '@/components/Form'
 
 interface Props {
   className?: string
 }
 
 const AnticipationCalculator: React.FC<Props> = ({ className }) => {
-  const handleSubmit = (): void => {
-    // ...
-  }
-
   return (
     <div
       className={cx(
@@ -20,12 +16,7 @@ const AnticipationCalculator: React.FC<Props> = ({ className }) => {
         className,
       )}
     >
-      <Form
-        className={cx('', className)}
-        onSubmit={handleSubmit}
-        subscription={{ submitting: true, pristine: true }}
-        initialValues={initialValues}
-      >
+      <Form initialValues={initialValues}>
         {({ handleSubmit }) => (
           <>
             <AnticipationCalculatorForm

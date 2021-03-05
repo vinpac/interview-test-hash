@@ -24,6 +24,7 @@ const AnticipationCalculatorForm: React.FC<Props> = ({
           name="amount"
           label={intl.formatMessage(messages.amountLabel)}
           required
+          config={{ validate: isNumber }}
           render={(props) => (
             <InputGroup>
               <InputAddon position="left" size="1.9rem">
@@ -40,11 +41,17 @@ const AnticipationCalculatorForm: React.FC<Props> = ({
           hint={intl.formatMessage(messages.installmentsHint)}
           required
           className="form-control"
+          config={{
+            validate: installmentsValidation,
+          }}
         />
         <FormControl
           name="mdr"
           label={intl.formatMessage(messages.mdrLabel)}
           required
+          config={{
+            validate: isNumber,
+          }}
           className="form-control"
         />
       </div>
@@ -70,6 +77,23 @@ const messages = defineMessages({
   installmentsHint: { defaultMessage: 'Máximo de 12 parcelas' },
   mdrLabel: { defaultMessage: 'Informe o percentual de MDR' },
 })
+
+const isNumber = (value: string): string | undefined => {
+  if (!/^[0-9]+$/.test(value)) {
+    return 'Este não é um número válido'
+  }
+}
+const installmentsValidation = (value: string): string | undefined => {
+  // It looks confusing this way.
+  // In other versions it should be more intuitive
+  if (!isNumber(value)) {
+    // If it pass the value IS a number
+    const int = parseInt(value, 10)
+    return int < 1 || int > 12
+      ? 'Você pode parcelar somente entre 1 a 12 vezes'
+      : undefined
+  }
+}
 
 export type AnticipationCalculatorFormProps = Props
 export default AnticipationCalculatorForm
