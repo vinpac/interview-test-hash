@@ -1,17 +1,20 @@
 import '../styles.css'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import { DEFAULT_LOCALE } from '@/static-constants'
 import { useRouter } from 'next/dist/client/router'
 import { castLocale, getSyncMessagesForLocale } from '@/lib/intl'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import Head from 'next/head'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const router = useRouter()
   const locale = castLocale(router.locale)
   const messages = getSyncMessagesForLocale(locale)
+
+  const client = useMemo(() => new QueryClient(), [])
 
   return (
     <IntlProvider
@@ -26,7 +29,9 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
           rel="stylesheet"
         />
       </Head>
-      <Component {...pageProps} />
+      <QueryClientProvider client={client}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </IntlProvider>
   )
 }

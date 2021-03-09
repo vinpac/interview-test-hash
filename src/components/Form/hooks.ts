@@ -44,10 +44,20 @@ export const useField = <Value = any>(
   const form = useForm()
   const [validationError, setValidationError] = useState(false)
   const [touched, setTouched] = useState(false)
-  const defaultValue = useMemo(
-    () => form.getFieldValue(fieldName) || config.initialValue,
-    [form, fieldName, config.initialValue],
-  )
+  const defaultValue = useMemo(() => {
+    const value = form.getFieldValue(fieldName)
+    if (typeof value !== 'undefined') {
+      return value
+    }
+
+    return config.initialValue
+  }, [form, fieldName, config.initialValue])
+
+  useEffect(() => {
+    if (fieldName && typeof defaultValue !== 'undefined' && config.validate) {
+      form.validateField(fieldName, defaultValue, config.validate)
+    }
+  }, [form, fieldName, defaultValue, config.validate])
 
   const onChange: FieldInputProps['onChange'] = useCallback(
     (event) => {

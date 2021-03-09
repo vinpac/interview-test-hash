@@ -42,6 +42,29 @@ const Form: React.FC<Props> = ({ children, initialValues }) => {
       fn(getState())
     })
   }, [getState])
+  const validateField = useCallback(
+    (
+      fieldName: string,
+      value: any,
+      validate: (value: string) => any,
+    ): any | undefined => {
+      let fieldError: any
+      try {
+        fieldError = validate(value)
+      } catch (error) {
+        fieldError = error
+      }
+
+      if (fieldError) {
+        errorsRef.current[fieldName] = fieldError
+      } else {
+        delete errorsRef.current[fieldName]
+      }
+
+      return fieldError
+    },
+    [],
+  )
   const change = useCallback(
     (
       fieldName: string,
@@ -54,24 +77,14 @@ const Form: React.FC<Props> = ({ children, initialValues }) => {
         [fieldName]: value,
       }
 
-      let fieldError: any
-      try {
-        fieldError = config?.validate?.(value)
-      } catch (error) {
-        fieldError = error
-      }
-
-      if (fieldError) {
-        errorsRef.current[fieldName] = fieldError
-      } else {
-        delete errorsRef.current[fieldName]
-      }
+      const error =
+        config?.validate && validateField(fieldName, value, config.validate)
 
       dispatchStateChange()
 
-      return { error: fieldError }
+      return { error }
     },
-    [dispatchStateChange],
+    [dispatchStateChange, validateField],
   )
   const getFieldValue = useCallback(
     (fieldName: string) => {
@@ -86,8 +99,9 @@ const Form: React.FC<Props> = ({ children, initialValues }) => {
       change,
       getFieldValue,
       getState,
+      validateField,
     }),
-    [listen, change, getFieldValue, getState],
+    [listen, change, getFieldValue, getState, validateField],
   )
   return (
     <FormContext.Provider value={ctxValue}>

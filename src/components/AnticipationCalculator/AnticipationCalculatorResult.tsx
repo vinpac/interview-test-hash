@@ -1,39 +1,63 @@
 import React from 'react'
 import cx from 'classnames'
-import { FormattedMessage } from 'react-intl'
-import AnticipationValue from './AnticipationValue'
+import { FiLoader } from 'react-icons/fi'
+import { useAnticipationCalculatorValues } from './hooks'
+import AnticipationSuccessResult from './AnticipationSuccessResult'
+import AnticipationErrorResult from './AnticipationErrorResult'
+import { useDelay } from '@/lib/hooks/utils'
 
 interface Props {
   className?: string
 }
 
 const AnticipationCalculatorResult: React.FC<Props> = ({ className }) => {
+  const query = useAnticipationCalculatorValues()
+  const dateToValue = query.data || initialDateToValue
+  const showLoadingIndicator =
+    useDelay(query.isLoading ? 1000 : -1) && query.isLoading
+
   return (
     <div
       className={cx(
-        'wrapper bg-gray-100 rounded-br rounded-tr p-8 sm:py-20',
+        'wrapper rounded-br rounded-tr p-8 sm:py-20 relative',
+        query.error && 'bg-red-100',
+        !query.error && 'bg-gray-100',
         className,
       )}
     >
-      <h1 className="text-blue-600 font-bold uppercase italic block pb-1 border-b-2 border-blue-200 mb-6">
-        <FormattedMessage defaultMessage="Você receberá:" />
-      </h1>
-      <div className="space-y-6">
-        <AnticipationValue days={1} value={0} />
-        <AnticipationValue days={15} value={0} />
-        <AnticipationValue days={30} value={0} />
-        <AnticipationValue days={90} value={0} />
-      </div>
+      {!query.error && (
+        <AnticipationSuccessResult
+          isLoading={query.isLoading}
+          dateToValue={dateToValue}
+        />
+      )}
+      {query.error && (
+        <AnticipationErrorResult
+          isLoading={query.isLoading}
+          error={query.error}
+        />
+      )}
 
+      {showLoadingIndicator && (
+        <FiLoader className="animate-spin absolute top-8 inset-x-0 text-2xl mx-auto text-blue-600" />
+      )}
       <style jsx>{`
         @media (min-width: 768px) {
           .wrapper {
+            max-width: 231px;
             min-width: 231px;
           }
         }
       `}</style>
     </div>
   )
+}
+
+const initialDateToValue: Record<string, number> = {
+  1: 0,
+  15: 0,
+  30: 0,
+  90: 0,
 }
 
 export type AnticipationCalculatorResultProps = Props

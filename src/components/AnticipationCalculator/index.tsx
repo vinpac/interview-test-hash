@@ -40,7 +40,7 @@ const AnticipationCalculator: React.FC<Props> = ({ className }) => {
 
 const initialValues: FormValues = {
   amount: '',
-  installments: '',
+  installments: '1',
   mdr: '',
 }
 

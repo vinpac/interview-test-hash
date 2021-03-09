@@ -6,6 +6,11 @@ export interface FormContextType {
     newValue: any,
     config?: FieldConfig<any>,
   ) => Pick<FieldMeta, 'error'>
+  validateField: (
+    fieldName: string,
+    value: any,
+    validate: (value: any) => any,
+  ) => any
   getFieldValue: (fieldName: string) => any
   getState: () => FormState<any>
   listen: (fn: FormListener<any>) => () => void
