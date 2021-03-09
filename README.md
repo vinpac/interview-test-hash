@@ -15,11 +15,24 @@ yarn dev # Roda o ambiente em desenvolvimento
 yarn test
 ```
 
+## Como rodar eslint
+
+```
+yarn lint
+```
+
+## Como rodar a validação de tips
+
+```
+yarn type-check
+```
+
 ## Stack
 
 - React.js 17.x.x
 - Next.js 10.x.x
 - TailwindCSS 2.x.x
+- React Final Form 6.x.x
 - Jest 26.x.x
 - Prettier
 - React Intl
@@ -39,3 +52,9 @@ Além disso é uma ótima ferramenta para sistematizar o Design. Utilizando as c
 3. React Intl
 
 Vendo que a [página de cultura para testes da Hash](https://tech-culture.hash.com.br/) era em inglês, eu decidi por fazer o teste nas duas linguas para demonstrar que tenho em experiência em criar projetos internacionais.
+
+
+
+4. React Final Form
+
+É uma das melhores bibliotecas para lidar com Forms que já usei. Se você der uma olhada nos commits vai ver que inicialmente eu implementei um componente e teste que reproduzem o comportamento dessa biblioteca. Acontece que eu entendi de forma errada a rega "Não é permitido utilizar frameworks e/ou bibliotecas de UI que não seja o React" 
