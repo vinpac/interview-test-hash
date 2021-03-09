@@ -19,5 +19,5 @@ const MetaTags: React.FC<NextSeoProps> = ({
   )
 }
 
-export type MetaTagsProps = Props
+export type MetaTagsProps = NextSeoProps
 export default MetaTags

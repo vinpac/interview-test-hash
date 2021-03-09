@@ -31,12 +31,7 @@ const AnticipationCalculatorResult: React.FC<Props> = ({ className }) => {
           dateToValue={dateToValue}
         />
       )}
-      {query.error && (
-        <AnticipationErrorResult
-          isLoading={query.isLoading}
-          error={query.error}
-        />
-      )}
+      {query.error && <AnticipationErrorResult error={query.error} />}
 
       {showLoadingIndicator && (
         <FiLoader className="animate-spin absolute top-8 inset-x-0 text-2xl mx-auto text-blue-600" />

@@ -25,8 +25,14 @@ const AnticipationValue: React.FC<Props> = ({
   ) : (
     <strong>{valueAsCurrency}</strong>
   )
+
   return (
-    <div className={cx('italic text-blue-400', className)}>
+    <div
+      className={cx('italic text-blue-400', className)}
+      data-testid={`anticipation-value-${days}`}
+      data-days={days}
+      data-value={value}
+    >
       {days === 1 ? (
         <FormattedMessage
           defaultMessage="Amanhã: {value}"

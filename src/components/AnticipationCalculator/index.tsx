@@ -2,13 +2,23 @@ import React from 'react'
 import cx from 'classnames'
 import AnticipationCalculatorForm from './AnticipationCalculatorForm'
 import AnticipationCalculatorResult from './AnticipationCalculatorResult'
-import { Form } from '@/components/Form'
+import { Form } from 'react-final-form'
+import { AnticipationCalculatorSchema, normalizeFormValues } from './validation'
+import { useIntlZodValidation } from '@/lib/intl'
 
 interface Props {
   className?: string
 }
 
 const AnticipationCalculator: React.FC<Props> = ({ className }) => {
+  const handleSubmit = (): void => {
+    // ...
+  }
+  const validate = useIntlZodValidation(
+    AnticipationCalculatorSchema,
+    normalizeFormValues,
+  )
+
   return (
     <div
       className={cx(
@@ -16,7 +26,11 @@ const AnticipationCalculator: React.FC<Props> = ({ className }) => {
         className,
       )}
     >
-      <Form initialValues={initialValues}>
+      <Form
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        validate={validate}
+      >
         {({ handleSubmit }) => (
           <>
             <AnticipationCalculatorForm

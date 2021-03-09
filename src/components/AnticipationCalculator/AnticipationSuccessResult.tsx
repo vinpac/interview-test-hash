@@ -12,6 +12,7 @@ const AnticipationSuccessResult: React.FC<Props> = ({
   isLoading,
 }) => {
   const dates = Object.keys(dateToValue)
+
   return (
     <>
       <h1 className="text-blue-600 font-bold uppercase italic block pb-1 border-b-2 border-blue-200 mb-6">

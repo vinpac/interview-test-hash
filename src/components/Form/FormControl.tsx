@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import cx from 'classnames'
-import { useField, UseFieldConfig } from './hooks'
+import { useField, UseFieldConfig } from 'react-final-form'
 import Input, { InputProps } from './Input'
 
 interface Props extends InputProps {

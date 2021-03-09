@@ -13,7 +13,8 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__mocks__/fileMock.js',
-    '^@/(lib|lang|components|types|static-constants)(.*)$':
+    '^@/(__test__|lib|lang|components|types|static-constants)(.*)$':
       '<rootDir>/src/$1$2',
   },
+  setupFiles: ['./jest.setup.ts'],
 }

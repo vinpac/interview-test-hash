@@ -1,8 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
-import { FormControl, Input, InputAddon, InputGroup } from '../Form'
+import { FormControl, Input, InputAddon, InputGroup } from '@/components/Form'
 import { defineMessages, useIntl } from 'react-intl'
-import { installmentsValidation, isNumber } from './utils'
 
 interface Props {
   className?: string
@@ -23,9 +22,9 @@ const AnticipationCalculatorForm: React.FC<Props> = ({
       <div className="input-list space-y-5">
         <FormControl
           name="amount"
+          data-testid="input-amount"
           label={intl.formatMessage(messages.amountLabel)}
           required
-          config={{ validate: isNumber }}
           render={(props) => (
             <InputGroup>
               <InputAddon position="left" size="1.9rem">
@@ -38,21 +37,17 @@ const AnticipationCalculatorForm: React.FC<Props> = ({
         />
         <FormControl
           name="installments"
+          data-testid="input-installments"
           label={intl.formatMessage(messages.installmentsLabel)}
           hint={intl.formatMessage(messages.installmentsHint)}
           required
           className="form-control"
-          config={{
-            validate: installmentsValidation,
-          }}
         />
         <FormControl
           name="mdr"
+          data-testid="input-mdr"
           label={intl.formatMessage(messages.mdrLabel)}
           required
-          config={{
-            validate: isNumber,
-          }}
           className="form-control"
         />
       </div>
